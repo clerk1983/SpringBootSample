@@ -16,8 +16,7 @@ public class HelloService {
         final String employeeId = (String) map.get("id");
         final String name = (String) map.get("name");
         final int age = (Integer) map.get("age");
-        final Employee employee = new Employee(employeeId, name, age);
-        return employee;
+        return new Employee(employeeId, name, age);
     }
 
 }
