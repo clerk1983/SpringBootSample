@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -18,9 +19,9 @@ public class SignupController {
     private UserApplicationService userApplicationService;
 
     @GetMapping("/signup")
-    public String getSignup(final Model model) {
+    public String getSignup(final Model model, final Locale locale) {
         // 性別を取得
-        final Map<String, Integer> genderMap = userApplicationService.getGenderMap();
+        final Map<String, Integer> genderMap = userApplicationService.getGenderMap(locale);
         model.addAttribute("genderMap", genderMap);
         return "user/signup";
     }
