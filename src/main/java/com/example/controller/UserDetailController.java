@@ -29,6 +29,7 @@ public class UserDetailController {
         user.setPassword(null);
 
         final UserDetailForm form = modelMapper.map(user, UserDetailForm.class);
+        form.setSalaryList(user.getSalaryList()); // ModelMapperではListはコピーされない
         model.addAttribute("userDetailForm", form);
 
         return "user/detail";

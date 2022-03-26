@@ -15,6 +15,7 @@
         <result column="department_id" property="departmentId" />
         <result column="role" property="role" />
         <association property="department" resultMap="department" />
+        <collection property="salaryList" resultMap="salary" columnPrefix="salary_" />
     </resultMap>
 
     <!-- Mapping(部署) -->
@@ -23,6 +24,15 @@
         <result column="department_name" property="departmentName" />
     </resultMap>
 
+    <!-- Mapping(部署) -->
+    <resultMap type="com.example.domain.user.model.Salary" id="salary">
+        <id column="user_id" property="userId" />
+        <id column="year_month" property="yearMonth" />
+        <result column="salary" property="salary" />
+    </resultMap>
+
+
+    <!-- ユーザー登録 -->
     <insert id="insertOne">
         insert into m_user(
              user_id
@@ -60,10 +70,30 @@
 
     <!-- ユーザー1件検索　-->
     <select id="findOne" resultMap="user">
-        select * from M_USER
-        left join m_department
-            on m_user.department_id = m_department.department_id
-        where user_id = #{userId}
+        select
+             M_USER.user_id
+            ,m_user.password
+            ,m_user.user_name
+            ,m_user.birthday
+            ,m_user.age
+            ,m_user.gender
+            ,m_department.department_id
+            ,m_department.department_name
+            ,t_salary.user_id as salary_user_id
+            ,t_salary.year_month as salary_year_month
+            ,t_salary.salary as salary_salary
+        from
+            M_USER
+        left join
+            m_department
+        on
+            m_user.department_id = m_department.department_id
+        left join
+            t_salary
+        on
+            t_salary.user_id = m_user.user_id
+        where
+            m_user.user_id = #{userId}
     </select>
 
     <!-- ユーザー1件更新 -->
