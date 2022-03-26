@@ -4,7 +4,7 @@
 <!-- Mapper と xml のマッピング -->
 <mapper namespace="com.example.repository.UserMapper">
 
-    <!-- Mapping -->
+    <!-- Mapping(ユーザー) -->
     <resultMap type="com.example.domain.user.model.MUser" id="user">
         <id column="user_id" property="userId" />
         <result column="password" property="password" />
@@ -14,6 +14,13 @@
         <result column="gender" property="gender" />
         <result column="department_id" property="departmentId" />
         <result column="role" property="role" />
+        <association property="department" resultMap="department" />
+    </resultMap>
+
+    <!-- Mapping(部署) -->
+    <resultMap type="com.example.domain.user.model.Department" id="department">
+        <id column="department_id" property="departmentId" />
+        <result column="department_name" property="departmentName" />
     </resultMap>
 
     <insert id="insertOne">
@@ -53,7 +60,10 @@
 
     <!-- ユーザー1件検索　-->
     <select id="findOne" resultMap="user">
-        select * from M_USER where user_id = #{userId}
+        select * from M_USER
+        left join m_department
+            on m_user.department_id = m_department.department_id
+        where user_id = #{userId}
     </select>
 
     <!-- ユーザー1件更新 -->
