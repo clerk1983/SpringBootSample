@@ -1,9 +1,12 @@
 package com.example.controller;
 
 import com.example.application.service.UserApplicationService;
+import com.example.domain.user.model.MUser;
+import com.example.domain.user.service.UserService;
 import com.example.form.GroupOrder;
 import com.example.form.SignupForm;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,12 @@ public class SignupController {
     @Autowired
     private UserApplicationService userApplicationService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping("/signup")
     public String getSignup(final Model model, final Locale locale,
                             @ModelAttribute SignupForm signupForm) {
@@ -49,6 +58,12 @@ public class SignupController {
             return getSignup(model, locale, signupForm);
         }
         log.info(signupForm.toString());
+
+        // Form を MUserクラスに変換
+        final MUser user = modelMapper.map(signupForm, MUser.class);
+
+        // ユーザー登録
+        userService.signup(user);
 
         return "redirect:/login";
     }
