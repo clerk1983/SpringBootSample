@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.application.service.UserApplicationService;
+import com.example.form.GroupOrder;
 import com.example.form.SignupForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,9 @@ public class SignupController {
     }
 
     @PostMapping("/signup")
-    public String postSignup(final Model model, final Locale locale,
-                             @ModelAttribute @Validated final SignupForm signupForm,
+    public String postSignup(final Model model,
+                             final Locale locale,
+                             @ModelAttribute @Validated(GroupOrder.class) final SignupForm signupForm,
                              final BindingResult bindingResult) {
         // 入力チェック
         if (bindingResult.hasErrors()) {
