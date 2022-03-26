@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<MUser> getUsers() {
-        return mapper.findMany();
+    public List<MUser> getUsers(MUser mUser) {
+        return mapper.findMany(mUser);
     }
 
     /**
