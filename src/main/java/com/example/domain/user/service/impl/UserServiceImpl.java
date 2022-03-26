@@ -6,6 +6,8 @@ import com.example.repository.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -22,4 +24,15 @@ public class UserServiceImpl implements UserService {
         mUser.setRole("ROLE_GENERAL"); // ロール
         mapper.insertOne(mUser);
     }
+
+    /**
+     * ユーザー取得
+     * @return
+     */
+    @Override
+    public List<MUser> getUsers() {
+        return mapper.findMany();
+    }
+
+
 }
