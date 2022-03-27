@@ -8,14 +8,13 @@ import com.example.form.SignupForm;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
 import java.util.Map;
@@ -38,6 +37,13 @@ public class SignupController {
     @Autowired
     private ModelMapper modelMapper;
 
+    /**
+     * ユーザ登録画面表示
+     * @param model
+     * @param locale
+     * @param signupForm
+     * @return
+     */
     @GetMapping("/signup")
     public String getSignup(final Model model, final Locale locale,
                             @ModelAttribute SignupForm signupForm) {
@@ -47,6 +53,14 @@ public class SignupController {
         return "user/signup";
     }
 
+    /**
+     * ユーザー登録処理
+     * @param model
+     * @param locale
+     * @param signupForm
+     * @param bindingResult
+     * @return
+     */
     @PostMapping("/signup")
     public String postSignup(final Model model,
                              final Locale locale,
@@ -66,6 +80,24 @@ public class SignupController {
         userService.signup(user);
 
         return "redirect:/login";
+    }
+
+    /**
+     * データベース関連の例外処理
+     * @param e
+     * @param model
+     * @return
+     */
+    @ExceptionHandler(DataAccessException.class)
+    public String dataAccessExceptionHandler(final DataAccessException e, final Model model) {
+        // 空文字をセット
+        model.addAttribute("error", "");
+        // メッセージをセット
+        model.addAttribute("message", "SignupControllerで例外発生");
+        // HTTPのエラーコード(500)を設定
+        model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return "error";
     }
 
 }
