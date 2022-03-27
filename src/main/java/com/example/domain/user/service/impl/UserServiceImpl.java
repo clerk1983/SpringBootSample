@@ -4,6 +4,7 @@ import com.example.domain.user.model.MUser;
 import com.example.domain.user.service.UserService;
 import com.example.repository.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper mapper;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     /**
      * ユーザー登録
      * @param mUser
@@ -23,6 +27,10 @@ public class UserServiceImpl implements UserService {
     public void signup(final MUser mUser) {
         mUser.setDepartmentId(1); // 部署
         mUser.setRole("ROLE_GENERAL"); // ロール
+        // パスワード暗号化
+        final String rawPassword = mUser.getPassword();
+        mUser.setPassword(encoder.encode(rawPassword));
+
         mapper.insertOne(mUser);
     }
 
@@ -54,7 +62,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void updateUserOne(String userId, String password, String userName) {
-        mapper.updateOne(userId, password, userName);
+        // パスワード暗号化
+        final String encryptPassword = encoder.encode(password);
+        mapper.updateOne(userId, encryptPassword, userName);
         // 例外を発生させる
 //        int i = 1 / 0;
 //        System.out.println(i);
