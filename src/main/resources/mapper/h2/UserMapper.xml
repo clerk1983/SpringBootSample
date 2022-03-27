@@ -111,4 +111,9 @@
         where user_id = #{userId}
     </delete>
 
+    <!-- ログインユーザー情報取得 -->
+    <select id="findLoginUser" resultType="MUser">
+        select * from M_USER where USER_ID = #{userId}
+    </select>
+
 </mapper>

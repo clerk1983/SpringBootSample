@@ -12,7 +12,7 @@ INSERT INTO m_user (
     role
 ) VALUES
    ('system@co.jp',
-    'password',
+    '$2a$10$XxBnE/unzKCEDJjumzVh9u.CFIhx/n91uODLWiJ/LdM3VD5PZNXUS',
     'システム管理者',
     '2000-01-01',
     21,
@@ -20,7 +20,7 @@ INSERT INTO m_user (
     1,
     'ROLE_ADMIN'),
    ('user@co.jp',
-    'password',
+    '$2a$10$XxBnE/unzKCEDJjumzVh9u.CFIhx/n91uODLWiJ/LdM3VD5PZNXUS',
     'ユーザー1',
     '2000-01-01',
     21,

@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService {
 
     /**
      * ユーザー登録
-     * @param mUser
      */
     @Override
     public void signup(final MUser mUser) {
@@ -36,7 +35,6 @@ public class UserServiceImpl implements UserService {
 
     /**
      * ユーザー取得
-     * @return
      */
     @Override
     public List<MUser> getUsers(MUser mUser) {
@@ -45,8 +43,6 @@ public class UserServiceImpl implements UserService {
 
     /**
      * ユーザー取得（1件）
-     * @param userId
-     * @return
      */
     @Override
     public MUser getUserOne(String userId) {
@@ -55,9 +51,6 @@ public class UserServiceImpl implements UserService {
 
     /**
      * ユーザー更新
-     * @param userId
-     * @param password
-     * @param userName
      */
     @Transactional
     @Override
@@ -66,17 +59,23 @@ public class UserServiceImpl implements UserService {
         final String encryptPassword = encoder.encode(password);
         mapper.updateOne(userId, encryptPassword, userName);
         // 例外を発生させる
-//        int i = 1 / 0;
-//        System.out.println(i);
+//        System.out.println(i/0);
     }
 
     /**
      * ユーザー削除
-     * @param userId
      */
     @Override
     public void deleteUserOne(String userId) {
         mapper.deleteOne(userId);
+    }
+
+    /**
+     * ログインユーザー情報取得
+     */
+    @Override
+    public MUser getLoginUser(String userId) {
+        return mapper.findLoginUser(userId);
     }
 
 

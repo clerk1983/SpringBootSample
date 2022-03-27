@@ -10,20 +10,23 @@ import java.util.List;
 public interface UserMapper {
 
     /** ユーザー登録 */
-    public int insertOne(MUser mUser);
+    int insertOne(MUser mUser);
 
     /** ユーザー取得 */
-    public List<MUser> findMany(MUser mUser);
+    List<MUser> findMany(MUser mUser);
 
     /** ユーザー取得（1件） */
-    public MUser findOne(String userId);
+    MUser findOne(String userId);
 
     /** ユーザー更新（1件） */
-    public void updateOne(@Param("userId") String userId,
+    void updateOne(@Param("userId") String userId,
                           @Param("password") String password,
                           @Param("userName") String userName);
 
     /** ユーザー削除（1件） */
-    public int deleteOne(@Param("userId") String userId);
+    int deleteOne(@Param("userId") String userId);
+
+    /** ログインユーザー取得 */
+    MUser findLoginUser(String userId);
 
 }
