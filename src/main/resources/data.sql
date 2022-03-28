@@ -1,5 +1,3 @@
-insert into employee values ('1', 'Tom', 30);
-
 /* ユーザーマスタ */
 INSERT INTO m_user (
     user_id,

@@ -1,8 +1,3 @@
-create table if not exists employee (
-    id varchar(50) primary key,
-    name varchar(50),
-    age int
-);
 
 /* ユーザーマスタ */
 CREATE TABLE IF NOT EXISTS m_user (
